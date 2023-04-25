@@ -1,0 +1,123 @@
+@{
+    string head = "Hello METANIT.COM!"; // определяем переменную head
+    string text = "ASP.NET Core Application";   // определяем переменную text
+}
+
+@* текст комментария *@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>METANIT.COM</title>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <h2>@head</h2> <!-- используем переменную head -->
+    <div>@text</div> <!-- используем переменную text -->
+    @{
+    string morning = "Good Morning";
+    string evening = "Good Evening";
+    string hello = "Hello";
+    int hour = DateTime.Now.Hour;
+}
+@if (hour < 12)
+{
+    <h2>@morning</h2>
+}
+else if (hour > 17)
+{
+    <h2>@evening</h2>
+}
+else
+{
+    <h2>@hello</h2>
+}
+
+@{
+    string language = "german";
+}
+@switch(language)
+{
+    case "russian":
+        <h3>Привет мир!</h3>
+        break;
+    case "german":
+        <h3>Hallo Welt!</h3>
+        break;
+    default:
+        <h3>Hello World!</h3>
+        break;
+}
+
+@{
+    string[] people = { "Tom", "Sam", "Bob" };
+}
+<ul>
+    @for (var i = 0; i < people.Length; i++)
+    {
+        <li>@people[i]</li>
+    }
+</ul>
+
+@try
+{
+    throw new InvalidOperationException("Something wrong");
+}
+catch (Exception ex)
+{
+    <p>Exception: @ex.Message</p>
+}
+finally
+{
+    <p>finally</p>
+}
+
+@{
+    bool isEnabled = true;
+}
+@if (isEnabled)
+{
+    @: Hello
+}
+
+
+@functions
+{
+    public int Sum(int a, int b) 
+    {
+        return a + b;
+    }
+    public int Square(int n) => n * n;
+}
+<p>Sum of 5 and 4: <b> @Sum(5, 4)</b></p>
+<p>Square of 4: <b>@Square(4)</b></p>
+
+
+@* @{
+    ViewData["Title"] = "ASP.NET Core MVC";
+}
+ 
+<h2>@ViewData["Title"]</h2>
+<h3>@ViewData["Message"]</h3> *@
+
+@* <h2>Count: @ViewBag.People.Count</h2>
+<ul>
+@foreach(string person in ViewBag.People)
+{
+    <li>@person</li>
+}
+</ul> *@
+
+
+@model List<string>
+ 
+<h2>Count: @Model.Count</h2>
+<ul>
+@foreach(string person in Model)
+{
+    <li>@person</li>
+}
+</ul>
+
+</body>
+</html>

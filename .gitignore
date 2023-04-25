@@ -1,0 +1,8 @@
+obj/
+bin/
+.artifacts/
+uploads/
+Files/
+*.txt
+*.db
+lib/

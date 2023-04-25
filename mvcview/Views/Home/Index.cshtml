@@ -1,0 +1,80 @@
+@* @{
+    Person tom = new Person("Tom", 37);
+}
+<h2>Person Data</h2>
+<h3>Name: @tom.Name</h3>
+<h3>Age: @tom.Age</h3>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h3>Index Content</h3>
+ 
+@section Footer {
+   Copyright© Metanit.com, @DateTime.Now.Year. All rights reserved
+} *@
+
+@* @await Html.PartialAsync("Hello") *@
+@* @{await Html.RenderPartialAsync("Hello");} *@
+
+@* @await Html.PartialAsync("Hello", new List<string>{"Hello", "Привет", "Hallo", "Salut"}) *@
+
+
+<h2>User Form</h2>
+<form method="post">
+    <p>
+        <label>User Name:</label><br />
+        <input type="text" name="username" />
+    </p>
+    <p>
+        <label>Password:</label><br />
+        <input type="password" name="password" />
+    </p>
+    <p>
+        <label>Age:</label><br />
+        <input type="number" name="age" />
+    </p>
+    <p>
+        <label>Comment:</label><br />
+        <textarea name="comment"></textarea>
+    </p>
+    <p>
+        <input type="submit" value="Send" />
+    </p>
+</form>
+
+<form method="post">
+    <label>Is Married:</label>
+    <input type="checkbox" name="isMarried" value="true"/><br /><br />
+    <input type="submit" value="Send" />
+</form>
+
+<form method="post">
+ 
+    <input name="color" type="radio" value="red" />
+    <span>red</span> <br />
+    <input name="color" type="radio" value="blue" />
+    <span>blue</span> <br />
+    <input checked="checked" name="color" type="radio" value="green" />
+    <span>green</span>
+     
+    <p>
+        <input type="submit" value="Send" />
+    </p>
+</form>
+
+<form method="post">
+    <p>
+        <label for="language">Выберите язык:</label>
+        <select multiple  name="languages">
+            <option value="csharp">C#</option>
+            <option value="vbnet">Visual Basic.NET</option>
+            <option value="fsharp">F#</option>
+            <option value="typescript">TypeScript</option>
+        </select>
+    </p>
+    <p>
+        <input type="submit" value="Отправить" />
+    </p>
+</form>

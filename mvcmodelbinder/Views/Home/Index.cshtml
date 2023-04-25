@@ -1,0 +1,8 @@
+@model IEnumerable<MvcApp.Models.Event>
+<h2>Все события</h2>
+<table>
+    @foreach(var eventInfo in Model)
+    {
+        <tr><td>@eventInfo.Id</td><td>@eventInfo.Name</td><td>@eventInfo.EventDate</td></tr>
+    }
+</table>
