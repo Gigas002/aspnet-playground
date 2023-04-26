@@ -1,0 +1,75 @@
+@page "{id?}"
+
+@{
+    string head = "Hello METANIT.COM!"; // определяем переменную head
+    string text = "ASP.NET Core Application";   // определяем переменную text
+}
+ 
+<h2>@head</h2> <!-- используем переменную head -->
+<div>@text</div> <!-- используем переменную text -->
+
+@* @model RazorPagesApp.Pages.IndexModel
+<h2>@Model.Message</h2>
+ 
+<h3>Time: @Model.PrintTime()</h3>
+
+<h2>@Message</h2> *@
+ 
+@* @functions {
+    public string Message { get; set; } = "";
+    public void OnGet()
+    {
+        Message = "Razor Pages on METANIT.COM";
+    }
+} *@
+
+@* @model RazorPagesApp.Pages.IndexModel
+ 
+<h2>@Model.Message</h2>
+<form method="post" >
+    <input type="text" name="username" />
+    <input type="submit" value="Отправить" />
+</form> *@
+
+@* @model RazorPagesApp.Pages.IndexModel
+ 
+<h2>Введите данные</h2>
+<form method="post" >
+    <p>
+        <label>Имя:</label><br />
+        <input type="text" name="name" />
+    </p>
+    <p>
+        <label>Возраст:</label><br />
+        <input type="number" name="age" />
+    </p>
+    <input type="submit" value="Отправить" />
+</form>
+@if(Request.Method == "POST")
+{
+    <h3>Полученные данные</h3>
+    <p>Name: @Model.Name</p>
+    <p>Age: @Model.Age</p>
+} *@
+
+@* @using RazorPagesApp.Pages
+@model IndexModel
+ 
+<h2>Список пользователей</h2>
+<table>
+    <tr><th>Name</th><th>Age</th></tr>
+    @foreach(Person person in Model.DisplayedPeople)
+    {
+        <tr>
+            <td>@person.Name</td>
+            <td>@person.Age</td>
+        </tr>
+    }
+</table> *@
+
+@model RazorPagesApp.Pages.IndexModel
+
+<h2>@Model.Message</h2>
+
+@inject ITimeService timeService
+<h2>Current Time: @timeService.Time</h2>

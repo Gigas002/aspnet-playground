@@ -6,3 +6,6 @@ Files/
 *.txt
 *.db
 lib/
+secrets.txt
+bootstrap/
+open-iconic/

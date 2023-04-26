@@ -1,27 +1,39 @@
 ﻿using System.Net.Http.Json;
+using System.Text.Json;
 
 namespace ChatGPT;
 
 public class Program
 {
+    private const string ModelName = "gpt-3.5-turbo";
+
+    private const string SecretPath = "../secrets.txt";
+
     public static async Task Main()
     {
         // токен из личного кабинета
-        // TODO: get api key from command line
-        string apiKey = "";
+        var secret = File.ReadAllText(SecretPath);
+
         // адрес api для взаимодействия с чат-ботом
-        string endpoint = "https://api.openai.com/v1/chat/completions";
+        var endpoint = "https://api.openai.com/v1/chat/completions";
+
         // набор соообщений диалога с чат-ботом
-        List<Message> messages = new List<Message>();
+        var messages = new List<Message>();
+
         // HttpClient для отправки сообщений
         var httpClient = new HttpClient();
+
         // устанавливаем отправляемый в запросе токен
-        httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {apiKey}");
+        httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {secret}");
+
+        // init json serializing options for snake_case
+        var options = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower };
 
         while (true)
         {
             // ввод сообщения пользователя
-            Console.Write("User: ");
+            Console.Write("User message: ");
+
             var content = Console.ReadLine();
 
             // если введенное сообщение имеет длину меньше 1 символа
@@ -29,20 +41,14 @@ public class Program
             if (content is not { Length: > 0 }) break;
 
             // формируем отправляемое сообщение
-            var message = new Message() { Role = "user", Content = content };
-
             // добавляем сообщение в список сообщений
-            messages.Add(message);
+            messages.Add(new Message("user", content));
 
             // формируем отправляемые данные
-            var requestData = new Request()
-            {
-                ModelId = "gpt-3.5-turbo",
-                Messages = messages
-            };
-            
+            var requestData = new Request(ModelName, messages);
+
             // отправляем запрос
-            using var response = await httpClient.PostAsJsonAsync(endpoint, requestData);
+            using var response = await httpClient.PostAsJsonAsync(endpoint, requestData, options);
 
             // если произошла ошибка, выводим сообщение об ошибке на консоль
             if (!response.IsSuccessStatusCode)
@@ -53,7 +59,7 @@ public class Program
             }
 
             // получаем данные ответа
-            ResponseData? responseData = await response.Content.ReadFromJsonAsync<ResponseData>();
+            var responseData = await response.Content.ReadFromJsonAsync<ResponseData>(options);
 
             var choices = responseData?.Choices ?? new List<Choice>();
 

@@ -1,0 +1,23 @@
+@page
+
+@{
+    ViewBag.Title = "Index";
+}
+<h3>Index Content</h3>
+
+@* @section Footer {
+   Copyright© Metanit.com, @DateTime.Now.Year. All rights reserved
+} *@
+ 
+@* Подключаем пространство имен класса Person *@
+@* @using RazorPagesApp *@
+@{
+    Person tom = new Person("Tom", 37);
+}
+<h2>Person Data</h2>
+<p>Name: <b>@tom.Name</b></p>
+<p>Age: <b>@tom.Age</b></p>
+
+@* @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers *@
+ 
+<a asp-page="About">About</a>

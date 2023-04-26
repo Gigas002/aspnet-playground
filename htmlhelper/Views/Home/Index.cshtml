@@ -1,1 +1,25 @@
 <a asp-controller="Home" asp-action="Contacts">Контакты</a>
+<environment names="Development">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" />
+</environment>
+<p>Некэшируемое время: <b>@DateTime.Now.ToString("HH:mm:ss")</b></p>
+<cache>
+<p>Кэшируемое время: <b>@DateTime.Now.ToString("HH:mm:ss")</b></p>
+</cache>
+
+<summary>
+    @* <timer /> *@
+    <timer style='new StyleInfo{Color="#c0392b", FontFamily="Verdana", FontSize=18}' />
+    <date></date>
+</summary>
+
+<div header>Hello World</div>
+<div header>Hello METANIT.COM</div>
+
+@{ 
+    List<string> countries = new List<string> { "Бразилия", "Аргентина", "Уругвай" };
+    List<string> cities = new List<string> { "Бразилиа", "Буэйнос-Айрес", "Монтевидео" };
+}
+ 
+<list elements="countries"></list>
+<list elements="cities"></list>

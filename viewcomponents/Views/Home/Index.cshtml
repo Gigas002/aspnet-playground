@@ -1,0 +1,47 @@
+@await Component.InvokeAsync("Timer")
+
+@* <vc:timer /> *@
+
+<h2>@await Component.InvokeAsync("Header")</h2>
+
+@* @addTagHelper *, MvcApp
+ 
+<h2><vc:header /></h2> *@
+
+<p>С секундами: <br />
+    @await Component.InvokeAsync("Timer", new { includeSeconds=true})
+</p>
+ 
+<p>Без секунд: <br />
+    @* <vc:timer include-seconds="false"></vc:timer> *@
+    @await Component.InvokeAsync("Timer")
+</p>
+
+@addTagHelper *, MvcApp
+ 
+@using MvcApp.Models <!-- пространство имен модели Person-->
+  
+@{
+    Person tom = new("Tom", 37);
+    Person alice = new("Alice", 32);
+}
+<p>
+    @await Component.InvokeAsync("PersonInfo", new { person = tom})
+</p>
+<p>
+    <vc:person-info person="alice"></vc:person-info>
+</p>
+
+<div>
+    @await Component.InvokeAsync("Timer")
+</div>
+<div>
+    <vc:timer />
+</div>
+
+<div>
+    @await Component.InvokeAsync("UsersList")
+</div>
+<div>
+    <vc:users-list />
+</div>
