@@ -1,0 +1,12 @@
+    <div>
+        <label for="dropdown">Select score</label>
+        <InputSelect id="dropdown" @bind-Value="@Score">
+            @for (int i = 1; i <= 10; i++)
+            {
+                <option value="@i">@i</option>
+            }
+        </InputSelect>
+    </div>
+    <button type="submit">Принять</button>
+
+    <p>Panis gave him @Score points</p>

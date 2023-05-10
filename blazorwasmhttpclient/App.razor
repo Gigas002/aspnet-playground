@@ -1,0 +1,48 @@
+﻿@using Microsoft.AspNetCore.Components.Web
+@using System.Net.Http.Json
+ 
+@inject HttpClient httpClient
+ 
+<div style="color:red;">@message</div>
+ 
+<div>
+    <p>
+        Имя:<br />
+        <input @bind-value="person.Name" />
+    </p>
+    <p>
+        Возраст:<br />
+        <input type="number" @bind-value="person.Age" />
+    </p>
+    <button @onclick="Submit">Click</button>
+</div>
+ 
+@code {
+    string? message;
+    Person person = new();
+    async Task Submit()
+    {
+        message = "";
+        var response = await httpClient.PostAsJsonAsync("user", person);
+        if (response.IsSuccessStatusCode)
+        {
+            var newPerson = await response.Content.ReadFromJsonAsync<Person> ();
+            if (newPerson != null) message = $"Создан объект Person с id = {newPerson.Id}";
+        }
+        else
+        {
+            var error = await response.Content.ReadFromJsonAsync<Error>();
+            if (error != null) message = error.Details;
+        }
+    } 
+    class Error
+    {
+        public string Details { get; set; } = "";
+    }
+    class Person
+    {
+        public string Id { get; set; } = "";
+        public string Name { get; set; } = "";
+        public int Age { get; set; }
+    }
+}

@@ -1,0 +1,81 @@
+﻿@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.AspNetCore.Components.Web
+@using System.Net.Http.Json
+ 
+@inject HttpClient httpClient
+ 
+<h2>Список пользователей</h2>
+<div>
+    <p>
+        Имя:<br />
+        <input @bind-value="person.Name" />
+    </p>
+    <p>
+        Возраст:<br />
+        <input type="number" @bind-value="person.Age" />
+    </p>
+    <p>
+        <button @onclick="Submit">Сохранить</button>
+    </p>
+</div>
+<table>
+    <thead><tr><th>Имя</th><th>Возраст</th><th></th></tr></thead>
+    <tbody>
+        @foreach (var person in people)
+        {
+            <tr>
+                <td>@person.Name</td> 
+                <td>@person.Age</td>
+                <td>
+                    <button @onclick="()=>Edit(person)">Изменить</button> 
+                    <button @onclick="@(async ()=> await Delete(person.Id))">Удалить</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+ 
+@code {
+ 
+    List<Person> people = new();
+    Person person = new();
+ 
+    protected override async Task OnInitializedAsync() => await LoadData();
+ 
+    async Task LoadData()
+    {
+        people = await httpClient.GetFromJsonAsync<List<Person>>("/api/users") ?? people;
+    }
+    // устанавливаем редактируемый объект
+    void Edit(Person p)
+    {
+        person.Id = p.Id;
+        person.Name = p.Name;
+        person.Age = p.Age;
+    }
+    async Task Submit()
+    {
+        // если id не установлен, то метод добавляем объект
+        if (string.IsNullOrWhiteSpace(person.Id))
+            await httpClient.PostAsJsonAsync("api/users", person);
+        else // иначе обновляем объект
+            await httpClient.PutAsJsonAsync($"api/users", person);
+        // сбрасываем значения
+        person.Id = "";
+        person.Name = "";
+        person.Age = 0;
+        await LoadData();
+    } 
+    // удаление объекта
+    async Task Delete(string id)
+    {
+        var response = await httpClient.DeleteAsync($"api/users/{id}");
+        await  LoadData();
+    }
+    class Person
+    {
+        public string Id { get; set; } = "";
+        public string Name { get; set; } = "";
+        public int Age { get; set; }
+    }
+}
