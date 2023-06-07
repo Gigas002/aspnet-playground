@@ -9,3 +9,7 @@ lib/
 secrets.txt
 bootstrap/
 open-iconic/
+*.exe
+pandaria/
+OpenHentai/
+dotnet_gh_deploy/
