@@ -2,9 +2,17 @@
 using System.Net.Http.Json;
 class Program
 {
-    public const string ServerAddress = "http://localhost:5230";
+    public const string IPv6ServerAddress =  "https://[::1]:5230";
 
-    static HttpClient httpClient = new HttpClient();
+    public const string ServerAddress = "https://localhost:5230";
+    
+    public const string CloudflareHttp3ServerAddress = "https://cloudflare-quic.com";
+
+    static HttpClient httpClient = new HttpClient() 
+    {
+        DefaultRequestVersion = HttpVersion.Version30,
+        DefaultVersionPolicy = HttpVersionPolicy.RequestVersionExact
+    };
     
     static async Task Main()
     {
