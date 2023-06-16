@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\DbLibrary\DbLibrary.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="SystemTextJsonPatch">
+      <HintPath>..\..\..\.nuget\packages\systemtextjsonpatch\2.0.1\lib\net7.0\SystemTextJsonPatch.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+</Project>
